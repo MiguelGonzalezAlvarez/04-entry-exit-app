@@ -1,1 +1,51 @@
-<p>entry-exit works!</p>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add new Entry / Exit</h4>
+                <p class="card-description">
+                    Specify amount & type
+                </p>
+
+                <form>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" placeholder="Description" name="description">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" class="form-control" placeholder="Amount" name="amount">
+                        <p>
+                            The amount must be positive
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Type</label>
+                        <br>
+                        <button type="button" class="btn btn-primary btn-block">Entry</button>
+                        <!-- <button type="button" class="btn btn-warning btn-block">Exit</button> -->
+                    </div>
+
+                    <hr>
+                    <button type="button" class="btn btn-success mr-2">
+                        <i class="fa fa-save"></i>
+                        Add
+                    </button>
+
+                    <!-- 
+                <button disabled class="btn btn-success mr-2">
+                  <i class="fa fa-spin fa-sync"></i>
+                  loading...
+                </button> 
+              -->
+
+                    <button type="reset" class="btn btn-light">Cancel</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
