@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Item } from '@angular/fire/analytics';
+import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +11,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'entryExitApp';
+
+  items: Observable<Item[]>;
+
+  constructor(private firestore: Firestore) {
+    const itemCollection = collection(this.firestore, 'items');
+    this.items = collectionData(itemCollection);
+  }
+
 }

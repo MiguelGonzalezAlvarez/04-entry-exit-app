@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "web-entryexitapp-ngrx": {
+      "hosting": {
+        "entryExitApp": [
+          "web-entryexitapp-ngrx"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "web-entryexitapp-ngrx"
+  }
+}
