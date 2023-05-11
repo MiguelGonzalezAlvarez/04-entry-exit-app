@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -25,11 +26,12 @@ export class RegisterComponent {
     if (this.registerForm.invalid) return;
 
     const { user, email, password } = this.registerForm.value;
+    
     this.authService
       .createAccount(user, email, password)
       .then(
         () => this.router.navigate(['/']),
-        (error) => { console.log(error); }
+        (error) => Swal.fire({ icon: 'error', title: 'Oops...', text: error.message })
       );
   }
 
