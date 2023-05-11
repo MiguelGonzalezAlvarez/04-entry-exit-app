@@ -1,89 +1,48 @@
-<div class="d-flex flex-column flex-sm-column flex-md-row flex-lg-row flex-xl-row">
-    <div class="flex-fill p-3">
-        <div class="card card-statistics">
-            <div class="card-body">
+<div *ngFor="let cardData of cardDataList; let index = index;">
+    <div *ngIf="index % 2 === 0" class="d-flex flex-column flex-sm-column flex-md-row flex-lg-row flex-xl-row">
+        <div *ngIf="index < cardDataList.length" class="flex-fill p-3">
+            <div class="card card-statistics">
+                <div class="card-body">
 
-                <div class="clearfix">
-                    <div class="float-left">
-                        <i class="fa fa-money-bill-alt text-success icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                        <p class="mb-0 text-right">Income</p>
-                        <div class="fluid-container">
-                            <h3 class="font-weight-medium text-right mb-0">$65,650</h3>
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <i [class]="getIconFromType(cardDataList[index].type)"></i>
+                        </div>
+                        <div class="float-right">
+                            <p class="mb-0 text-right">{{cardDataList[index].title | titlecase}}</p>
+                            <div class="fluid-container">
+                                <h3 class="font-weight-medium text-right mb-0">{{cardDataList[index].income |
+                                    currency}}</h3>
+                            </div>
                         </div>
                     </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i>{{cardDataList[index].growth}}
+                    </p>
                 </div>
-                <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
-                </p>
             </div>
         </div>
-    </div>
 
-    <div class="flex-fill p-3">
-        <div class="card card-statistics">
-            <div class="card-body">
+        <div *ngIf="index + 1 < cardDataList.length" class="flex-fill p-3">
+            <div class="card card-statistics">
+                <div class="card-body">
 
-                <div class="clearfix">
-                    <div class="float-left">
-                        <i class="fa fa-shipping-fast text-danger icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                        <p class="mb-0 text-right">Income</p>
-                        <div class="fluid-container">
-                            <h3 class="font-weight-medium text-right mb-0">$65,650</h3>
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <i [class]="getIconFromType(cardDataList[index + 1].type)"></i>
+                        </div>
+                        <div class="float-right">
+                            <p class="mb-0 text-right">{{cardDataList[index + 1].title | titlecase}}</p>
+                            <div class="fluid-container">
+                                <h3 class="font-weight-medium text-right mb-0">{{cardDataList[index + 1].income | currency}}
+                                </h3>
+                            </div>
                         </div>
                     </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i>{{cardDataList[index + 1].growth}}
+                    </p>
                 </div>
-                <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="d-flex flex-column flex-sm-column flex-md-row flex-lg-row flex-xl-row">
-    <div class="flex-fill p-3">
-        <div class="card card-statistics">
-            <div class="card-body">
-    
-                <div class="clearfix">
-                    <div class="float-left">
-                        <i class="fa fa-anchor text-primary icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                        <p class="mb-0 text-right">Income</p>
-                        <div class="fluid-container">
-                            <h3 class="font-weight-medium text-right mb-0">$65,650</h3>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
-                </p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="flex-fill p-3">
-        <div class="card card-statistics">
-            <div class="card-body">
-    
-                <div class="clearfix">
-                    <div class="float-left">
-                        <i class="fa fa-balance-scale text-warning icon-lg"></i>
-                    </div>
-                    <div class="float-right">
-                        <p class="mb-0 text-right">Income</p>
-                        <div class="fluid-container">
-                            <h3 class="font-weight-medium text-right mb-0">$65,650</h3>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
-                </p>
             </div>
         </div>
     </div>
