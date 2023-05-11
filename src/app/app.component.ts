@@ -3,6 +3,7 @@ import { Item } from '@angular/fire/analytics';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,8 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   title = 'entryExitApp';
 
-  items: Observable<Item[]>;
-
-  constructor(private firestore: Firestore) {
-    const itemCollection = collection(this.firestore, 'items');
-    this.items = collectionData(itemCollection);
+  constructor(private authService: AuthService) {
+    this.authService.initAuthStateListener();
   }
 
 }
