@@ -1,11 +1,5 @@
 import { Component } from '@angular/core';
-
-interface CardData {
-  title: string;
-  type: string
-  income: number;
-  growth: string;
-}
+import { CardData } from 'src/app/models/statistic.model';
 
 @Component({
   selector: 'app-statistic',
