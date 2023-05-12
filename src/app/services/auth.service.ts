@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Auth, UserCredential, createUserWithEmailAndPassword, signOut, getAuth, authState } from '@angular/fire/auth';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { User, Auth, UserCredential, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from '@angular/fire/auth';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private currentAuthState: User | null;
 
-  constructor(private fireAuth: Auth) { }
+  constructor(private fireStore: Firestore, private fireAuth: Auth) {
+    this.currentAuthState = null;
+  }
 
-  createAccount(user: string, email: string, password: string): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(this.fireAuth, email, password);
+  createAccount(name: string, email: string, password: string): Promise<UserCredential | void> {
+    return createUserWithEmailAndPassword(this.fireAuth, email, password).then(
+      ({ user }) => this.updateAccount(user.uid, name, email)
+    );
+  }
+
+  updateAccount(userId: string, userName: string, userEmail: string): Promise<void> {
+    return setDoc(doc(this.fireStore, `users/${userId}`), { userId, userName, userEmail }, { merge: true });
   }
 
   loginAccount(email: string, password: string): Promise<UserCredential> {
@@ -22,7 +31,11 @@ export class AuthService {
   }
 
   initAuthStateListener(): void {
-    authState(this.fireAuth).subscribe((user) => console.log(user));
+    onAuthStateChanged(this.fireAuth, (authState) => this.currentAuthState = authState);
+  }
+
+  isUserAuthorized(): boolean {
+    return this.currentAuthState !== null;
   }
 
 }
