@@ -1,5 +1,5 @@
 import { ActionReducerMap } from "@ngrx/store";
-import { SharedState, sharedReducer } from "./shared/shared.redicer";
+import { SharedState, sharedReducer } from "./shared/shared.reducer";
 
 export interface AppState {
     sharedInfo: SharedState;
