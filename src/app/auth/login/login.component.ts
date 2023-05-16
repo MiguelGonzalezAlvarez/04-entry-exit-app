@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { updateLoading } from 'src/app/shared/shared.actions';
 
 import Swal from 'sweetalert2';
 
@@ -12,34 +16,48 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
+  sharedInfoSubscription!: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private store: Store<AppState>, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       email: new FormControl('sample@gmail.com', [Validators.required, Validators.email]),
       password: new FormControl('Sample Password', Validators.required),
     });
+
+    this.sharedInfoSubscription = this.store.select('sharedInfo').subscribe(({ isLoading }) => {
+      if (isLoading) Swal.fire({ title: "Loading...", didOpen: () => Swal.showLoading() });
+      else Swal.close();
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    this.sharedInfoSubscription.unsubscribe();
   }
 
   login() {
     if (this.loginForm.invalid) return;
 
+    this.store.dispatch(updateLoading({ loading: true }));
+
     const { email, password } = this.loginForm.value;
-
-    Swal.fire({ title: "Loading...", didOpen: () => Swal.showLoading() });
-
     this.authService
       .loginAccount(email, password)
       .then(
         () => {
+          this.store.dispatch(updateLoading({ loading: false }));
           this.router.navigate(['/']);
-          Swal.close();
         },
-        (error) => Swal.fire({ icon: 'error', title: 'Oops...', text: error.message })
+        (error) => {
+          this.store.dispatch(updateLoading({ loading: false }));
+          Swal.fire({ icon: 'error', title: 'Oops...', text: error.message })
+        }
       );
+
   }
 
 }
