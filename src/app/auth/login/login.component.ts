@@ -5,9 +5,10 @@ import { Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
+import { updateLoading } from 'src/app/shared/shared.actions';
 
 import { AuthService } from 'src/app/services/auth.service';
-import { updateLoading } from 'src/app/shared/shared.actions';
+
 
 import Swal from 'sweetalert2';
 
@@ -20,6 +21,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   sharedInfoSubscription!: Subscription;
 
+  isLoading: boolean = false;
+
   constructor(private authService: AuthService, private store: Store<AppState>, private router: Router) { }
 
   ngOnInit(): void {
@@ -29,8 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     this.sharedInfoSubscription = this.store.select('sharedInfo').subscribe(({ isLoading }) => {
-      if (isLoading) Swal.fire({ title: "Loading...", didOpen: () => Swal.showLoading() });
-      else Swal.close();
+      this.isLoading = isLoading;
     });
 
   }
