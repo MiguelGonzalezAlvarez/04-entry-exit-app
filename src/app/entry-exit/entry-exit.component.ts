@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EntryExitService } from '../services/entry-exit.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-entry-exit',
@@ -8,9 +10,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EntryExitComponent {
   entryExitForm: FormGroup;
-  entryExitType: String = 'entry';
+  entryExitType = 'entry';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private EntryExitService: EntryExitService) {
     this.entryExitForm = this.fb.group({
       description: ['', Validators.required],
       amount: ['', Validators.required]
@@ -19,8 +21,18 @@ export class EntryExitComponent {
 
   saveEntryExit(): void {
     if (this.entryExitForm.invalid) return;
-    
-    console.log(this.entryExitForm.value);
+
+    const { description, amount } = this.entryExitForm.value;
+    const entryExit = { description, amount, type: this.entryExitType };
+
+    this.EntryExitService.createEntryExit(entryExit)
+      .then(
+        () => {
+          Swal.fire('Register added', description, 'success');
+          this.entryExitForm.reset();
+        },
+        (error) => Swal.fire('Error', error.message, 'error')
+      );
   }
 
 }

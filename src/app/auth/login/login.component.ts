@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.router.navigate(['/']);
         },
         (error) => {
+          console.log(error);
           this.store.dispatch(updateLoading({ loading: false }));
           Swal.fire({ icon: 'error', title: 'Oops...', text: error.message })
         }

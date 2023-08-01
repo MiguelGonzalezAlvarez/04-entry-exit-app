@@ -45,4 +45,8 @@ export class AuthService {
     return this.currentAuthState !== null;
   }
 
+  getCurrentUserId(): string {
+    return this.currentAuthState?.uid ?? '';
+  }
+
 }
