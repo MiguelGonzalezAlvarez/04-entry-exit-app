@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, Auth, UserCredential, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, Unsubscribe } from '@angular/fire/auth';
+import { User, Auth, UserCredential, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 
 import { Store } from '@ngrx/store';
@@ -16,10 +16,9 @@ export class AuthService {
     this.currentAuthState = null;
   }
 
-  createAccount(name: string, email: string, password: string): Promise<UserCredential | void> {
-    return createUserWithEmailAndPassword(this.fireAuth, email, password).then(
-      ({ user }) => this.updateAccount(user.uid, name, email)
-    );
+  async createAccount(name: string, email: string, password: string): Promise<UserCredential | void> {
+    const { user } = await createUserWithEmailAndPassword(this.fireAuth, email, password);
+    return await this.updateAccount(user.uid, name, email);
   }
 
   updateAccount(userId: string, userName: string, userEmail: string): Promise<void> {
