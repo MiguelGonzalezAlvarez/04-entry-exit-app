@@ -18,10 +18,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.userSubscription = this.reduxStore
       .select('authInfo')
       .pipe(filter(authInfo => authInfo?.user != null))
-      .subscribe(({ user }) => {
-        console.log(user);
-        this.entryExitService.initEntryExitListener(user!.uid);
-      });
+      .subscribe(({ user }) => this.entryExitService.initEntryExitListener(user!.uid));
   }
 
   ngOnDestroy(): void {

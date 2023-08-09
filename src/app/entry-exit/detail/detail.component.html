@@ -16,11 +16,20 @@
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>Description</td>
-                            <td>Amount</td>
-                            <td>Type</td>
-                            <td>Actions</td>
+                        <tr *ngFor="let entryExit of entryExitList">
+                            <td>{{ entryExit.description }}</td>
+                            <td>{{ entryExit.amount | currency }}</td>
+                            <td [class.text-success]="entryExit.type === 'entry'"
+                                [class.text-danger]="entryExit.type === 'exit'">
+                                {{ entryExit.type }}
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" (click)="deleteEntryExit(entryExit.uid)">
+                                    <i class="fa fa-trash"></i>
+                                    Delete
+                                </button>
+
+                            </td>
                         </tr>
                     </tbody>
 

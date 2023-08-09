@@ -1,3 +1,3 @@
 export class EntryExit {
-    constructor(public description: String, public type: String, public amount: Number, public uid?: String) { }
+    constructor(public description: string, public type: string, public amount: number, public uid?: string) { }
 }
