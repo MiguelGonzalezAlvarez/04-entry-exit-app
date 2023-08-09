@@ -16,7 +16,7 @@
                     </thead>
 
                     <tbody>
-                        <tr *ngFor="let entryExit of entryExitList">
+                        <tr *ngFor="let entryExit of entryExitList | orderEntyExit">
                             <td>{{ entryExit.description }}</td>
                             <td>{{ entryExit.amount | currency }}</td>
                             <td [class.text-success]="entryExit.type === 'entry'"

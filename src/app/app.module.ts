@@ -24,6 +24,7 @@ import { DetailComponent } from './entry-exit/detail/detail.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { OrderEntyExitPipe } from './pipes/order-enty-exit.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     DetailComponent,
     FooterComponent,
     SidebarComponent,
-    NavbarComponent
+    NavbarComponent,
+    OrderEntyExitPipe
   ],
   imports: [
     BrowserModule,
